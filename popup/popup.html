@@ -10,15 +10,23 @@
   <div class="container">
     <header>
       <h1>YouTube Time Limit</h1>
+      <div class="segment-control" id="langControl">
+        <button class="segment active" data-lang="ja">JP</button>
+        <button class="segment" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <div class="enable-section">
+      <span class="enable-label" data-i18n="enableLabel">時間制限</span>
       <label class="toggle">
         <input type="checkbox" id="enableToggle">
         <span class="slider"></span>
       </label>
-    </header>
+    </div>
 
     <div class="status-section">
       <div class="time-display">
-        <span class="label">残り時間</span>
+        <span class="label" data-i18n="remaining">残り時間</span>
         <span class="time" id="remainingTime">--:--:--</span>
       </div>
 
@@ -27,17 +35,17 @@
       </div>
 
       <div class="time-info">
-        <span id="usedTime">使用: --:--</span>
-        <span id="limitTime">上限: --:--</span>
+        <span id="usedTime"></span>
+        <span id="limitTime"></span>
       </div>
     </div>
 
     <div class="settings-section">
-      <label class="setting-label">1日の上限時間</label>
+      <label class="setting-label" data-i18n="dailyLimit">1日の上限時間</label>
       <div class="limit-control">
         <button class="limit-btn" id="decreaseLimit">-</button>
         <span class="limit-value" id="limitValue">120</span>
-        <span class="limit-unit">分</span>
+        <span class="limit-unit" data-i18n="minutes">分</span>
         <button class="limit-btn" id="increaseLimit">+</button>
       </div>
     </div>
@@ -46,11 +54,11 @@
       <a href="https://ko-fi.com/M4M71TGIVM" target="_blank" class="kofi-button">
         <img height="36" src="https://storage.ko-fi.com/cdn/kofi6.png?v=6" alt="Buy Me a Coffee at ko-fi.com">
       </a>
-      <p class="kofi-message">気に入ったらコーヒーをおごってね</p>
+      <p class="kofi-message" data-i18n="kofiMessage">気に入ったらコーヒーをおごってね</p>
     </div>
 
     <footer>
-      <a href="#" id="openOptions">詳細設定</a>
+      <a href="#" id="openOptions" data-i18n="settings">詳細設定</a>
     </footer>
   </div>
 

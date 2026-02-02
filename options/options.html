@@ -9,18 +9,18 @@
 <body>
   <div class="container">
     <header>
-      <h1>YouTube Time Limit 設定</h1>
+      <h1 data-i18n="title">YouTube Time Limit 設定</h1>
     </header>
 
     <main>
       <!-- 基本設定 -->
       <section class="card">
-        <h2>基本設定</h2>
+        <h2 data-i18n="basicSettings">基本設定</h2>
 
         <div class="setting-row">
           <div class="setting-info">
-            <label>時間制限を有効にする</label>
-            <p class="description">オフにするとYouTubeの使用時間を制限しません</p>
+            <label data-i18n="enableLimit">時間制限を有効にする</label>
+            <p class="description" data-i18n="enableLimitDesc">オフにするとYouTubeの使用時間を制限しません</p>
           </div>
           <label class="toggle">
             <input type="checkbox" id="enableToggle">
@@ -30,37 +30,37 @@
 
         <div class="setting-row">
           <div class="setting-info">
-            <label>1日の上限時間</label>
-            <p class="description">YouTubeを使用できる1日あたりの最大時間</p>
+            <label data-i18n="dailyLimit">1日の上限時間</label>
+            <p class="description" data-i18n="dailyLimitDesc">YouTubeを使用できる1日あたりの最大時間</p>
           </div>
           <div class="time-input">
             <input type="number" id="limitHours" min="0" max="12" value="2">
-            <span>時間</span>
+            <span data-i18n="hours">時間</span>
             <input type="number" id="limitMinutes" min="0" max="59" value="0">
-            <span>分</span>
+            <span data-i18n="minutes">分</span>
           </div>
         </div>
       </section>
 
       <!-- 今日の統計 -->
       <section class="card">
-        <h2>今日の統計</h2>
+        <h2 data-i18n="todayStats">今日の統計</h2>
 
         <div class="stats-grid">
           <div class="stat-item">
-            <span class="stat-label">使用時間</span>
+            <span class="stat-label" data-i18n="usedTime">使用時間</span>
             <span class="stat-value" id="todayUsed">0:00:00</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">残り時間</span>
+            <span class="stat-label" data-i18n="remainingTime">残り時間</span>
             <span class="stat-value" id="todayRemaining">2:00:00</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">上限時間</span>
+            <span class="stat-label" data-i18n="limitTime">上限時間</span>
             <span class="stat-value" id="todayLimit">2:00:00</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">使用率</span>
+            <span class="stat-label" data-i18n="usageRate">使用率</span>
             <span class="stat-value" id="todayPercentage">0%</span>
           </div>
         </div>
@@ -72,32 +72,32 @@
 
       <!-- データ管理 -->
       <section class="card">
-        <h2>データ管理</h2>
+        <h2 data-i18n="dataManagement">データ管理</h2>
 
         <div class="setting-row">
           <div class="setting-info">
-            <label>今日の使用時間をリセット</label>
-            <p class="description">今日の使用時間を0にリセットします</p>
+            <label data-i18n="resetToday">今日の使用時間をリセット</label>
+            <p class="description" data-i18n="resetTodayDesc">今日の使用時間を0にリセットします</p>
           </div>
-          <button class="btn btn-warning" id="resetToday">リセット</button>
+          <button class="btn btn-warning" id="resetToday" data-i18n="resetBtn">リセット</button>
         </div>
 
         <div class="setting-row">
           <div class="setting-info">
-            <label>すべての設定を初期化</label>
-            <p class="description">設定と使用データをすべて削除します</p>
+            <label data-i18n="resetAll">すべての設定を初期化</label>
+            <p class="description" data-i18n="resetAllDesc">設定と使用データをすべて削除します</p>
           </div>
-          <button class="btn btn-danger" id="resetAll">初期化</button>
+          <button class="btn btn-danger" id="resetAllBtn" data-i18n="initBtn">初期化</button>
         </div>
       </section>
 
       <!-- サポート -->
       <section class="card support-card">
-        <h2>開発をサポート</h2>
+        <h2 data-i18n="support">開発をサポート</h2>
         <a href="https://ko-fi.com/M4M71TGIVM" target="_blank" class="kofi-button">
           <img height="36" src="https://storage.ko-fi.com/cdn/kofi6.png?v=6" alt="Buy Me a Coffee at ko-fi.com">
         </a>
-        <p class="support-text">この拡張機能が役に立ったら、開発者にコーヒーをおごってください</p>
+        <p class="support-text" data-i18n="supportText">この拡張機能が役に立ったら、開発者にコーヒーをおごってください</p>
       </section>
     </main>
 

@@ -1,8 +1,37 @@
 // YouTube Time Limit - Popup Script
 
+// 翻訳データ
+const i18n = {
+  ja: {
+    enableLabel: '時間制限',
+    remaining: '残り時間',
+    used: '使用',
+    limit: '上限',
+    dailyLimit: '1日の上限時間',
+    minutes: '分',
+    hours: '時間',
+    kofiMessage: '気に入ったらコーヒーをおごってね',
+    settings: '詳細設定'
+  },
+  en: {
+    enableLabel: 'Time Limit',
+    remaining: 'Remaining',
+    used: 'Used',
+    limit: 'Limit',
+    dailyLimit: 'Daily time limit',
+    minutes: 'min',
+    hours: 'h',
+    kofiMessage: 'Buy me a coffee if you like it!',
+    settings: 'Settings'
+  }
+};
+
+let currentLang = 'ja';
+
 const elements = {
   container: null,
   enableToggle: null,
+  langControl: null,
   remainingTime: null,
   progressBar: null,
   usedTime: null,
@@ -17,8 +46,9 @@ let currentSettings = null;
 let updateInterval = null;
 
 // 初期化
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   initElements();
+  await loadLanguage();
   loadStatus();
   setupEventListeners();
 
@@ -30,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initElements() {
   elements.container = document.querySelector('.container');
   elements.enableToggle = document.getElementById('enableToggle');
+  elements.langControl = document.getElementById('langControl');
   elements.remainingTime = document.getElementById('remainingTime');
   elements.progressBar = document.getElementById('progressBar');
   elements.usedTime = document.getElementById('usedTime');
@@ -38,6 +69,42 @@ function initElements() {
   elements.decreaseLimit = document.getElementById('decreaseLimit');
   elements.increaseLimit = document.getElementById('increaseLimit');
   elements.openOptions = document.getElementById('openOptions');
+}
+
+// 言語設定を読み込み
+async function loadLanguage() {
+  const data = await chrome.storage.local.get(['language']);
+  currentLang = data.language || 'ja';
+  updateSegmentControl();
+  applyTranslations();
+}
+
+// セグメントコントロールを更新
+function updateSegmentControl() {
+  elements.langControl.querySelectorAll('.segment').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === currentLang);
+  });
+}
+
+// 言語を切り替え
+async function switchLanguage(lang) {
+  currentLang = lang;
+  await chrome.storage.local.set({ language: lang });
+  applyTranslations();
+  if (currentSettings) {
+    updateUI(currentSettings);
+  }
+}
+
+// 翻訳を適用
+function applyTranslations() {
+  const t = i18n[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) {
+      el.textContent = t[key];
+    }
+  });
 }
 
 // ステータスを読み込み
@@ -56,17 +123,19 @@ async function loadStatus() {
 
 // UIを更新
 function updateUI(status) {
+  const t = i18n[currentLang];
+
   // 有効/無効トグル
   elements.enableToggle.checked = status.enabled;
   elements.container.classList.toggle('disabled', !status.enabled);
 
   // 上限時間
   elements.limitValue.textContent = status.dailyLimitMinutes;
-  elements.limitTime.textContent = `上限: ${formatMinutes(status.dailyLimitMinutes)}`;
+  elements.limitTime.textContent = `${t.limit}: ${formatMinutes(status.dailyLimitMinutes)}`;
 
   // 使用時間
   const usedMinutes = Math.floor(status.todayUsedSeconds / 60);
-  elements.usedTime.textContent = `使用: ${formatMinutes(usedMinutes)}`;
+  elements.usedTime.textContent = `${t.used}: ${formatMinutes(usedMinutes)}`;
 
   // 残り時間
   if (status.enabled) {
@@ -106,13 +175,21 @@ function formatSeconds(seconds) {
 
 // 分をHH:MM形式に変換
 function formatMinutes(minutes) {
+  const t = i18n[currentLang];
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
 
-  if (hours > 0) {
-    return `${hours}時間${mins}分`;
+  if (currentLang === 'ja') {
+    if (hours > 0) {
+      return `${hours}時間${mins}分`;
+    }
+    return `${mins}分`;
+  } else {
+    if (hours > 0) {
+      return `${hours}h ${mins}m`;
+    }
+    return `${mins}m`;
   }
-  return `${mins}分`;
 }
 
 // ゼロ埋め
@@ -122,6 +199,17 @@ function pad(num) {
 
 // イベントリスナーの設定
 function setupEventListeners() {
+  // 言語切り替え
+  elements.langControl.querySelectorAll('.segment').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const newLang = btn.dataset.lang;
+      if (newLang !== currentLang) {
+        switchLanguage(newLang);
+        updateSegmentControl();
+      }
+    });
+  });
+
   // 有効/無効トグル
   elements.enableToggle.addEventListener('change', async () => {
     await updateSettings({ enabled: elements.enableToggle.checked });
