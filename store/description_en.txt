@@ -1,0 +1,33 @@
+TubeTimer - Control Your YouTube Time
+
+Are you spending too much time on YouTube? TubeTimer helps you take control of your daily YouTube usage with a simple and effective time limit feature.
+
+FEATURES:
+- Set daily time limits (e.g., 2 hours per day)
+- Real-time remaining time display
+- Automatic blocking when limit is reached
+- Daily reset at midnight
+- Quick settings from popup
+- Detailed statistics in options page
+- English and Japanese language support
+
+HOW IT WORKS:
+1. Set your daily YouTube time limit
+2. Browse YouTube as usual
+3. TubeTimer tracks your usage in the background
+4. When you reach your limit, YouTube is blocked until midnight
+
+PERFECT FOR:
+- Students who want to focus on studying
+- Professionals looking to boost productivity
+- Parents managing children's screen time
+- Anyone wanting to reduce YouTube addiction
+
+PRIVACY:
+- All data is stored locally on your device
+- No data is collected or sent to external servers
+- No account required
+
+Take back control of your time with TubeTimer!
+
+Created by noranekob
