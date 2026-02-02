@@ -19,27 +19,15 @@
 
         <div class="setting-row">
           <div class="setting-info">
-            <label data-i18n="enableLimit">時間制限を有効にする</label>
-            <p class="description" data-i18n="enableLimitDesc">オフにするとYouTubeの使用時間を制限しません</p>
+            <label data-i18n="language">言語</label>
+            <p class="description" data-i18n="languageDesc">表示言語を選択</p>
           </div>
-          <label class="toggle">
-            <input type="checkbox" id="enableToggle">
-            <span class="slider"></span>
-          </label>
+          <div class="segment-control" id="langControl">
+            <button class="segment active" data-lang="ja">JP</button>
+            <button class="segment" data-lang="en">EN</button>
+          </div>
         </div>
 
-        <div class="setting-row">
-          <div class="setting-info">
-            <label data-i18n="dailyLimit">1日の上限時間</label>
-            <p class="description" data-i18n="dailyLimitDesc">YouTubeを使用できる1日あたりの最大時間</p>
-          </div>
-          <div class="time-input">
-            <input type="number" id="limitHours" min="0" max="12" value="2">
-            <span data-i18n="hours">時間</span>
-            <input type="number" id="limitMinutes" min="0" max="59" value="0">
-            <span data-i18n="minutes">分</span>
-          </div>
-        </div>
       </section>
 
       <!-- 今日の統計 -->

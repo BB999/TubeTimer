@@ -124,6 +124,35 @@ input:checked + .slider:before {
   transform: translateX(22px);
 }
 
+/* Segment Control */
+.segment-control {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.segment {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #888;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.segment:hover {
+  color: #fff;
+}
+
+.segment.active {
+  background: #e94560;
+  color: #fff;
+}
+
 /* Time Input */
 .time-input {
   display: flex;

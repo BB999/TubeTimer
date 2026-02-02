@@ -31,7 +31,6 @@ let currentLang = 'ja';
 const elements = {
   container: null,
   enableToggle: null,
-  langControl: null,
   remainingTime: null,
   progressBar: null,
   usedTime: null,
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initElements() {
   elements.container = document.querySelector('.container');
   elements.enableToggle = document.getElementById('enableToggle');
-  elements.langControl = document.getElementById('langControl');
   elements.remainingTime = document.getElementById('remainingTime');
   elements.progressBar = document.getElementById('progressBar');
   elements.usedTime = document.getElementById('usedTime');
@@ -75,25 +73,7 @@ function initElements() {
 async function loadLanguage() {
   const data = await chrome.storage.local.get(['language']);
   currentLang = data.language || 'ja';
-  updateSegmentControl();
   applyTranslations();
-}
-
-// セグメントコントロールを更新
-function updateSegmentControl() {
-  elements.langControl.querySelectorAll('.segment').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === currentLang);
-  });
-}
-
-// 言語を切り替え
-async function switchLanguage(lang) {
-  currentLang = lang;
-  await chrome.storage.local.set({ language: lang });
-  applyTranslations();
-  if (currentSettings) {
-    updateUI(currentSettings);
-  }
 }
 
 // 翻訳を適用
@@ -128,6 +108,10 @@ function updateUI(status) {
   // 有効/無効トグル
   elements.enableToggle.checked = status.enabled;
   elements.container.classList.toggle('disabled', !status.enabled);
+
+  // 上限時間の設定ボタンを有効/無効
+  elements.decreaseLimit.disabled = !status.enabled;
+  elements.increaseLimit.disabled = !status.enabled;
 
   // 上限時間
   elements.limitValue.textContent = status.dailyLimitMinutes;
@@ -199,17 +183,6 @@ function pad(num) {
 
 // イベントリスナーの設定
 function setupEventListeners() {
-  // 言語切り替え
-  elements.langControl.querySelectorAll('.segment').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const newLang = btn.dataset.lang;
-      if (newLang !== currentLang) {
-        switchLanguage(newLang);
-        updateSegmentControl();
-      }
-    });
-  });
-
   // 有効/無効トグル
   elements.enableToggle.addEventListener('change', async () => {
     await updateSettings({ enabled: elements.enableToggle.checked });

@@ -5,6 +5,8 @@ const i18n = {
   ja: {
     title: 'YouTube Time Limit 設定',
     basicSettings: '基本設定',
+    language: '言語',
+    languageDesc: '表示言語を選択',
     enableLimit: '時間制限を有効にする',
     enableLimitDesc: 'オフにするとYouTubeの使用時間を制限しません',
     dailyLimit: '1日の上限時間',
@@ -31,6 +33,8 @@ const i18n = {
   en: {
     title: 'YouTube Time Limit Settings',
     basicSettings: 'Basic Settings',
+    language: 'Language',
+    languageDesc: 'Select display language',
     enableLimit: 'Enable time limit',
     enableLimitDesc: 'Turn off to disable YouTube time restriction',
     dailyLimit: 'Daily time limit',
@@ -80,6 +84,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function loadLanguage() {
   const data = await chrome.storage.local.get(['language']);
   currentLang = data.language || 'ja';
+  updateSegmentControl();
+  applyTranslations();
+}
+
+// セグメントコントロールを更新
+function updateSegmentControl() {
+  const langControl = document.getElementById('langControl');
+  langControl.querySelectorAll('.segment').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === currentLang);
+  });
+}
+
+// 言語を切り替え
+async function switchLanguage(lang) {
+  currentLang = lang;
+  await chrome.storage.local.set({ language: lang });
+  updateSegmentControl();
   applyTranslations();
 }
 
@@ -98,14 +119,7 @@ function applyTranslations() {
 async function loadSettings() {
   const data = await chrome.storage.local.get(['settings']);
   const settings = data.settings || DEFAULT_SETTINGS;
-
-  document.getElementById('enableToggle').checked = settings.enabled;
-
-  const hours = Math.floor(settings.dailyLimitMinutes / 60);
-  const minutes = settings.dailyLimitMinutes % 60;
-
-  document.getElementById('limitHours').value = hours;
-  document.getElementById('limitMinutes').value = minutes;
+  // 設定はストレージから読み込み済み
 }
 
 // 統計を読み込み
@@ -160,14 +174,15 @@ function pad(num) {
 
 // イベントリスナーの設定
 function setupEventListeners() {
-  // 有効/無効トグル
-  document.getElementById('enableToggle').addEventListener('change', async (e) => {
-    await saveSettings({ enabled: e.target.checked });
+  // 言語切り替え
+  document.getElementById('langControl').querySelectorAll('.segment').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const newLang = btn.dataset.lang;
+      if (newLang !== currentLang) {
+        switchLanguage(newLang);
+      }
+    });
   });
-
-  // 時間設定
-  document.getElementById('limitHours').addEventListener('change', saveTimeLimit);
-  document.getElementById('limitMinutes').addEventListener('change', saveTimeLimit);
 
   // 今日の使用時間をリセット
   document.getElementById('resetToday').addEventListener('click', async () => {
@@ -202,16 +217,6 @@ function setupEventListeners() {
       loadStats();
     }
   });
-}
-
-// 時間制限を保存
-async function saveTimeLimit() {
-  const hours = parseInt(document.getElementById('limitHours').value) || 0;
-  const minutes = parseInt(document.getElementById('limitMinutes').value) || 0;
-
-  const totalMinutes = Math.max(1, Math.min(720, hours * 60 + minutes)); // 1分〜12時間
-
-  await saveSettings({ dailyLimitMinutes: totalMinutes });
 }
 
 // 設定を保存
