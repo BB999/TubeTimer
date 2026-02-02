@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube - 時間制限</title>
+  <link rel="stylesheet" href="blocked.css">
+</head>
+<body>
+  <div class="container">
+    <div class="icon">⏰</div>
+    <h1>今日のYouTube時間は終了しました</h1>
+    <p class="message">1日の使用時間上限に達しました。</p>
+    <p class="sub-message">明日0時にリセットされます。</p>
+
+    <div class="info-box">
+      <p>設定を変更するには、拡張機能のオプションページを開いてください。</p>
+    </div>
+
+    <div class="actions">
+      <button id="openOptions" class="btn btn-secondary">設定を開く</button>
+      <button id="closeTab" class="btn btn-primary">タブを閉じる</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('openOptions').addEventListener('click', () => {
+      chrome.runtime.openOptionsPage();
+    });
+
+    document.getElementById('closeTab').addEventListener('click', () => {
+      window.close();
+    });
+  </script>
+</body>
+</html>
