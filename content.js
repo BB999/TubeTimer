@@ -22,6 +22,13 @@ if (!document.hidden) {
   startTicking();
 }
 
+// 動画が再生中かどうかをチェック
+function isVideoPlaying() {
+  const video = document.querySelector('video');
+  if (!video) return false;
+  return !video.paused && !video.ended && video.readyState > 2;
+}
+
 // ブロック状態をチェック
 function checkBlockStatus() {
   chrome.runtime.sendMessage({ type: 'checkBlock' }, (response) => {
@@ -42,6 +49,7 @@ function startTicking() {
 
   tickInterval = setInterval(() => {
     if (!isPageVisible) return;
+    if (!isVideoPlaying()) return; // 動画再生中のみカウント
 
     chrome.runtime.sendMessage({ type: 'tick' }, (response) => {
       if (chrome.runtime.lastError) {
