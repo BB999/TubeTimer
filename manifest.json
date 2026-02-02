@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Time Limit",
+  "name": "TubeTimer",
   "version": "1.0.0",
   "description": "YouTubeの1日の使用時間を制限する拡張機能",
   "permissions": [

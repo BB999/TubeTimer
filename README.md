@@ -1,4 +1,4 @@
-# YouTube Time Limit - Chrome拡張機能
+# TubeTimer - Chrome拡張機能
 
 YouTubeの1日の使用時間を制限するChrome拡張機能
 

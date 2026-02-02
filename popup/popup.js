@@ -72,7 +72,7 @@ function initElements() {
 // 言語設定を読み込み
 async function loadLanguage() {
   const data = await chrome.storage.local.get(['language']);
-  currentLang = data.language || 'ja';
+  currentLang = data.language || 'en';
   applyTranslations();
 }
 

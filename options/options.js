@@ -3,7 +3,7 @@
 // 翻訳データ
 const i18n = {
   ja: {
-    title: 'YouTube Time Limit 設定',
+    title: 'TubeTimer 設定',
     basicSettings: '基本設定',
     language: '言語',
     languageDesc: '表示言語を選択',
@@ -31,7 +31,7 @@ const i18n = {
     confirmResetAll: 'すべての設定を初期化しますか？この操作は取り消せません。'
   },
   en: {
-    title: 'YouTube Time Limit Settings',
+    title: 'TubeTimer Settings',
     basicSettings: 'Basic Settings',
     language: 'Language',
     languageDesc: 'Select display language',
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // 言語設定を読み込み
 async function loadLanguage() {
   const data = await chrome.storage.local.get(['language']);
-  currentLang = data.language || 'ja';
+  currentLang = data.language || 'en';
   updateSegmentControl();
   applyTranslations();
 }
