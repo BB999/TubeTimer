@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "TubeTimer",
   "version": "1.0.0",
-  "description": "YouTubeの1日の使用時間を制限する拡張機能",
+  "description": "Limit your daily YouTube usage time and stay productive",
   "permissions": [
     "storage",
     "alarms",
